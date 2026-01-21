@@ -310,11 +310,19 @@ router.get('/leaderboard', auth, async (req, res) => {
         select: 'firstName lastName email role',
         match: { role: 'student' }
       })
-      .sort({ totalCoins: -1, questionsCompleted: -1 })
-      .limit(50)
     
     // Filter out entries where userId is null (non-students)
-    const studentLeaderboard = leaderboard.filter(entry => entry.userId !== null)
+    const studentLeaderboard = leaderboard
+      .filter(entry => entry.userId !== null)
+      .sort((a, b) => {
+        // First sort by problems solved (descending)
+        if (b.questionsCompleted !== a.questionsCompleted) {
+          return b.questionsCompleted - a.questionsCompleted
+        }
+        // If problems solved are same, sort by accuracy (descending)
+        return b.accuracy - a.accuracy
+      })
+      .slice(0, 50)
     
     res.json(studentLeaderboard)
   } catch (error) {

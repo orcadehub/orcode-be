@@ -152,6 +152,24 @@ router.post('/seed-twosum', auth, checkModerator, async (req, res) => {
   }
 })
 
+// Get moderator activities (both student submissions and moderator actions)
+router.get('/activities', auth, checkModerator, async (req, res) => {
+  try {
+    const activities = await Activity.find({
+      $or: [
+        { type: 'moderator_action', userId: req.user.id },
+        { type: { $ne: 'moderator_action' } }
+      ]
+    })
+      .sort({ createdAt: -1 })
+      .limit(20)
+    
+    res.json(activities)
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
 module.exports = router
 
 // Update topic order
