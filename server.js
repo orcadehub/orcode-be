@@ -11,6 +11,9 @@ const PORT = process.env.PORT || 5001
 // Connect to MongoDB
 connectDB()
 
+// Trust proxy for Render
+app.set('trust proxy', 1)
+
 // Middleware
 app.use(cors({
   origin: [

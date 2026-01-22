@@ -8,11 +8,9 @@ services:
       - key: NODE_ENV
         value: production
       - key: PISTON_API_URL
-        value: http://piston:2000
+        value: https://orcode-piston.onrender.com
       - key: MONGODB_URI
-        fromDatabase:
-          name: mongodb
-          property: connectionString
+        sync: false
       - key: JWT_SECRET
         generateValue: true
       - key: EMAIL_USER
@@ -20,8 +18,8 @@ services:
       - key: EMAIL_PASS
         sync: false
 
-  - type: pserv
-    name: piston
+  - type: web
+    name: orcode-piston
     env: docker
     dockerfilePath: ./piston/Dockerfile
     dockerContext: ./piston

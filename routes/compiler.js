@@ -5,7 +5,7 @@ const auth = require('../middleware/auth')
 const router = express.Router()
 
 // Piston API configuration
-const PISTON_API_URL = process.env.PISTON_API_URL || 'http://piston:2000'
+const PISTON_API_URL = process.env.PISTON_API_URL || 'http://localhost:2000'
 const PISTON_TIMEOUT = parseInt(process.env.PISTON_TIMEOUT) || 10000
 const MAX_RETRIES = parseInt(process.env.PISTON_MAX_RETRIES) || 3
 
