@@ -23,7 +23,8 @@ services:
     env: docker
     dockerfilePath: ./piston/Dockerfile
     dockerContext: ./piston
-    port: 2000
     envVars:
+      - key: PORT
+        value: 10000
       - key: PISTON_LOG_LEVEL
         value: INFO
