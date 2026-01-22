@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  judge0:
+    image: judge0/judge0:1.13.0
+    volumes:
+      - ./tmp/srv/jailer:/srv/jailer
+      - ./tmp/srv/tmp:/srv/tmp
+    ports:
+      - "2358:2358"
+    privileged: true
+    environment:
+      - RAILS_ENV=production
+      - DATABASE_URL=postgres://judge0:YourPasswordHere@db:5432/judge0
+      - REDIS_URL=redis://redis:6379
+      - ENABLE_WAIT_RESULT=true
+      - ENABLE_COMPILER_OPTIONS=true
+    depends_on:
+      - db
+      - redis
+    restart: unless-stopped
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: judge0
+      POSTGRES_PASSWORD: YourPasswordHere
+      POSTGRES_DB: judge0
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  redis:
+    image: redis:7
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
