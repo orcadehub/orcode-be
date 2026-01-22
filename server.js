@@ -16,6 +16,7 @@ app.use(cors({
   origin: [
     'http://localhost:3000',
     'http://localhost:5173',
+    'https://orcode.in',
     'https://orcode-fe-git-main-orcadehubs-projects.vercel.app',
     /https:\/\/.*\.vercel\.app$/
   ],
