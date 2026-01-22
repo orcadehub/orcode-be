@@ -322,9 +322,31 @@ router.get('/leaderboard', auth, async (req, res) => {
         // If problems solved are same, sort by accuracy (descending)
         return b.accuracy - a.accuracy
       })
-      .slice(0, 50)
+      .slice(0, 100)
     
     res.json(studentLeaderboard)
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
+// Get student count
+router.get('/student-count', auth, async (req, res) => {
+  try {
+    const User = require('../models/User')
+    const totalStudents = await User.countDocuments({ role: 'student' })
+    res.json({ totalStudents })
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
+// Get student count (public endpoint)
+router.get('/student-count-public', async (req, res) => {
+  try {
+    const User = require('../models/User')
+    const totalStudents = await User.countDocuments({ role: 'student' })
+    res.json({ totalStudents })
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
