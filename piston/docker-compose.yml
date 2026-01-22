@@ -1,0 +1,21 @@
+services:
+  piston:
+    image: ghcr.io/engineer-man/piston
+    platform: linux/amd64
+    container_name: piston_api
+    ports:
+      - "2000:2000"
+    environment:
+      - PISTON_LOG_LEVEL=INFO
+      - PISTON_ENABLE_NETWORKING=false
+      - PISTON_MAX_PROCESS_COUNT=64
+      - PISTON_MAX_OPEN_FILES=2048
+      - PISTON_MAX_FILE_SIZE=10000000
+    volumes:
+      - piston_packages:/piston/packages
+      - /tmp/piston:/tmp
+    restart: unless-stopped
+    privileged: true
+
+volumes:
+  piston_packages:

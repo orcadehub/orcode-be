@@ -39,6 +39,7 @@ app.use('/api/auth', authRoutes)
 app.use('/api/setup', setupRoutes)
 app.use('/api/moderator', require('./routes/moderator'))
 app.use('/api/user', require('./routes/progress'))
+app.use('/api/compiler', require('./routes/compiler'))
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
